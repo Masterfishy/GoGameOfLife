@@ -56,7 +56,9 @@ In the _Gopher Life_ engine, Entities hold components. This allows the engine to
 
 ### Nodes
 
-The `nodes.go` file contains the definition for the different node structs. Similar to the entities, nodes aren't necessary to ECS and can take different forms. The key here, is to group certain components with each other for use by a system. For example: both a rendering system and a movement system need position, so a render node and a movement node would hold pointers to a position component. But both systems don't necessarily need the same data, so nodes are system specific.
+The `nodes.go` file contains the definition for the different node structs. Similar to the entities, nodes aren't necessary to ECS and can take different forms. The key here, is to group certain components with each other for use by a system.
+
+For example: both a rendering system and a movement system need position, so a render node and a movement node would hold pointers to a position component. The movement system does not need a slice of points for the shape of an object, while the render system does. As such, the render node has a pointer to a slice of points and the movement node does not.
 
 The _Gopher Life_ engine has two types of nodes: `RenderNodes` and `LivingNodes`.
 
@@ -99,22 +101,30 @@ There are additional flags to customize the life of the Gophers.
 
 The number of columns and rows of gophers
 
-`go run main.go -cols 100 -rows 100`
+```
+go run main.go -cols 100 -rows 100
+```
 
 #### `-seed`
 
 The random seed to set for the simulation
 
-`go run main.go -seed 42`
+```
+go run main.go -seed 42
+```
 
 #### `-threshold`
 
 The probability a cell is alive at the start of the simulation
 
-`go run main.go -threshold .15`
+```
+go run main.go -threshold .15
+```
 
 #### `-fps`
 
 The rate of simulation update
 
-`go run main.go -fps 10`
+```
+go run main.go -fps 10
+```
