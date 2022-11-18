@@ -38,7 +38,7 @@ var (
 )
 
 func init() {
-    flag.IntVar(&cols, "columns", cols, "Sets the number of columns.")
+    flag.IntVar(&cols, "cols", cols, "Sets the number of columns.")
 	flag.IntVar(&rows, "rows", rows, "Sets the number of rows.")
 	flag.Int64Var(&seed, "seed", seed, "Sets the starting seed of the game, used to randomize the initial state.")
 	flag.Float64Var(&threshold, "threshold", threshold, "A percentage between 0 and 1 used in conjunction with the -seed to determine if a cell starts alive. For example, 0.15 means each cell has a 15% chance of starting alive.")
