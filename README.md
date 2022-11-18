@@ -28,7 +28,7 @@ With a simple game like Conway's Game of Life, I set off to try my hand at ECS.
 
 ### Why Go
 
-Because Go is cool, clean, and has pointers.
+Because Go is python with pointers, and I think that's radical.
 
 ## The Graphics
 
@@ -73,3 +73,9 @@ The `LivingSystem` determines the next state of all the cells based on the curre
 ### Components
 
 The `components.go` file contains all the data needed that a cell or game state or system might need.
+
+The `PositionComponent` contains an x and y coordinate and a rotation.
+
+The `DisplayComponent` has an array of points that are the vertices of a shape. It also contains an x, y, and rotation specific to rendering.
+
+The `LivingComponent` has two bools determining the living state of a cell.
