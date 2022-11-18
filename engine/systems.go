@@ -7,24 +7,6 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
-type ISystem interface {
-	Start()
-	Update(time float32)
-	End()
-}
-
-type MoveSystem struct {
-	Targets []MoveNode
-}
-
-func (ms MoveSystem) Update(time float32) {
-	for _, target := range ms.Targets {
-		target.Position.X += target.Velocity.X * time;
-		target.Position.Y += target.Velocity.Y * time;
-		target.Position.Rotation += target.Velocity.AngularVelocity * time;
-	}
-}
-
 ///////////////////
 // Render System //
 ///////////////////
@@ -32,6 +14,15 @@ type RenderSystem struct {
 	Targets []RenderNode
 	Window *glfw.Window
 	Program uint32
+}
+
+// Creates a new RenderSystem with the given window
+func NewRenderSystem(window *glfw.Window) (*RenderSystem, error) {
+	system := &RenderSystem{
+		Window: window,
+	}
+
+	return system, nil
 }
 
 // Initialize OpenGL
@@ -78,6 +69,7 @@ func (rs RenderSystem) Update(time float32) {
     rs.Window.SwapBuffers()
 }
 
+// Draws the given node
 func (rs RenderSystem) draw(node *RenderNode) {
 	node.Display.X = node.Position.X
 	node.Display.Y = node.Position.Y
@@ -97,6 +89,16 @@ type LivingSystem struct {
 	Targets [][]LivingNode
 }
 
+// Creates a new LivingSystem with xSize by ySize LivingNodes
+func NewLivingSystem(xSize int, ySize int) (*LivingSystem, error) {
+	system := &LivingSystem{
+		Targets: make([][]LivingNode, xSize, ySize),
+	}
+
+	return system, nil
+}
+
+// Updates the LivingSystem by the given time step
 func (ls LivingSystem) Update(time float32) {
 	for x := range ls.Targets {
 		for _, node := range ls.Targets[x]{

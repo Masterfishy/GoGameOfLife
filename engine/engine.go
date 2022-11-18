@@ -4,7 +4,7 @@ import ( "container/list")
 
 type Engine struct {
 	Entities list.List
-	Systems []ISystem
+	Systems []any
 	Nodes map[string]list.List
 }
 
@@ -16,11 +16,11 @@ func (e Engine) RemoveEntity(entity Entity) {
 	// TODO
 }
 
-func (e Engine) AddSystem(system ISystem) {
+func (e Engine) AddSystem(system any) {
 	// TODO
 }
 
-func (e Engine) RemoveSystem(system ISystem) {
+func (e Engine) RemoveSystem(system any) {
 	// TODO
 }
 

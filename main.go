@@ -33,8 +33,8 @@ var (
     threshold = 0.2
     fps = 10
 
-    renderSystem = new(RenderSystem)
-    livingSystem = new(LivingSystem)
+    renderSystem *RenderSystem
+    livingSystem *LivingSystem
 )
 
 func init() {
@@ -55,10 +55,10 @@ func main() {
     window := initGlfw()
     defer glfw.Terminate()
     
-    renderSystem.Window = window
-    renderSystem.Start()
+    renderSystem, _ = NewRenderSystem(window)
+    livingSystem, _ = NewLivingSystem(rows, cols)
 
-    livingSystem.Targets = make([][]LivingNode, rows, cols)
+    renderSystem.Start()
 
     makeCells()
 

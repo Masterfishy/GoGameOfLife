@@ -1,10 +1,5 @@
 package engine
 
-type MoveNode struct {
-	Position *PositionComponent
-	Velocity *VelocityComponent
-}
-
 type RenderNode struct {
 	Position *PositionComponent
 	Display *DisplayComponent
