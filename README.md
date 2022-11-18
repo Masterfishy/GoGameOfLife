@@ -66,9 +66,9 @@ The `LivingNodes` holder pointers to components necessary for tracking the livin
 
 The `systems.go` file contains the definitions for the two systems of the game: `RenderSystem` and the `LivingSystem`. Systems in ECS read and modify data to simulate our game. Calling the update function on the system moves the "simulation" a time step.
 
-The `RenderSystem` creates a vector array object from data provided by the `RenderNode`s and draws them to the screen. It draws the living cells.
+The `RenderSystem` creates a vector array object from data provided by the `RenderNodes` and draws them to the screen. It draws the living cells.
 
-The `LivingSystem` determines the next state of all the cells based on the current state of the simulation and the [Rules of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules).
+The `LivingSystem` determines the next state of all the cells based on the current state of the simulation contained in the `LivingNodes` and the [Rules of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules).
 
 ### Components
 
