@@ -97,25 +97,24 @@ There are additional flags to customize the life of the Gophers.
 
 #### `-cols` and `-rows`
 
-- `-cols`: The number of columns of cells
-- `-rows`: The number of rows of cells
+The number of columns and rows of gophers
 
 `go run main.go -cols 100 -rows 100`
 
 #### `-seed`
 
-- `-seed`: The random seed to set for the simulation
+The random seed to set for the simulation
 
 `go run main.go -seed 42`
 
 #### `-threshold`
 
-- `-threshold`: The probability a cell is alive at the start of the simulation
+The probability a cell is alive at the start of the simulation
 
 `go run main.go -threshold .15`
 
 #### `-fps`
 
-- `fps`: The rate of simulation update
+The rate of simulation update
 
 `go run main.go -fps 10`
