@@ -8,9 +8,11 @@ Along with being an implementation of the Game of Life, it is also my first impl
 
 ### The Problem
 
-I have been making games for the past 5+ years. My programming background primarily being software development and university classes, I always approached game programming from a Object Oriented lense. Encapsulation, inheritance, polymorphism, our lovely world of OOP. For simple games made in 48 hours, this worked.
+I have been making games for the past 5+ years. My programming background primarily being software development and university classes, I always approached game programming from an object oriented angle. Encapsulation, inheritance, polymorphism, our lovely world of OOP. For simple games made in 48 hours, this worked.
 
-As my ambitions and games grew, I found myself running into the same issues related to horrible webs of dependencies. To place my player I needed my map manager. For my map manager I need the game manager. For the game manager I need my level manager. Just to experiment with my player I had to build my entire game. The webs were thick and my patience for messy code was running out. At this point, I realized it was time to learn a bit more about game programming.
+As my ambitions, and games, grew, I found myself running into the same issues related to horrible webs of dependencies. To place my player I needed my map manager. For my map manager I need the game manager. For the game manager I need my level manager. Just to experiment with my player I had to build my entire game.
+
+The webs were thick and my patience for messy code was running out. At this point, I realized it was time to learn a bit more about game programming.
 
 ### A Solution
 
@@ -32,7 +34,7 @@ Because Go is python with pointers, and I think that's radical.
 
 ## The Graphics
 
-In the graphics folder, you can find code that communicates with OpenGL to render a window on Windows machines.
+In the graphics folder, you can find code that creates objects for rendering with OpenGL.
 
 The file `shader.go` provides simple shaders and a function for compiling shaders with OpenGL.
 
@@ -40,7 +42,7 @@ The file `vao.go` provides definitions for vector array objects so that OpenGL c
 
 ## The Engine Architecture
 
-The engine is broken down into multiple levels: an engine, entities, nodes, systems, and components.
+The engine is broken down into multiple pieces: an engine, entities, nodes, systems, and components.
 
 ### Engine
 
@@ -79,3 +81,41 @@ The `PositionComponent` contains an x and y coordinate and a rotation.
 The `DisplayComponent` has an array of points that are the vertices of a shape. It also contains an x, y, and rotation specific to rendering.
 
 The `LivingComponent` has two bools determining the living state of a cell.
+
+## Installing and Running the Gopher Life
+
+Wanna simulate the _Gopher Life_?
+
+1. [Install Golang](https://go.dev/dl/)
+2. `go get https://github.com/Masterfishy/GopherLife`
+3. Enter the directory `GopherLife`
+4. Run `go run main.go`
+
+### Flags
+
+There are additional flags to customize the life of the Gophers.
+
+#### `-cols` and `-rows`
+
+- `-cols`: The number of columns of cells
+- `-rows`: The number of rows of cells
+
+`go run main.go -cols 100 -rows 100`
+
+#### `-seed`
+
+- `-seed`: The random seed to set for the simulation
+
+`go run main.go -seed 42`
+
+#### `-threshold`
+
+- `-threshold`: The probability a cell is alive at the start of the simulation
+
+`go run main.go -threshold .15`
+
+#### `-fps`
+
+- `fps`: The rate of simulation update
+
+`go run main.go -fps 10`
