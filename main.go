@@ -18,13 +18,13 @@ const (
 
 var (
     square = []float32{
-        -0.5, 0.5, 0,
-        -0.5, -0.5, 0,
-        0.5, -0.5, 0,
+        -1, 1, 0,
+        -1, -1, 0,
+        1, -1, 0,
     
-        -0.5, 0.5, 0,
-        0.5, 0.5, 0,
-        0.5, -0.5, 0,
+        -1, 1, 0,
+        1, 1, 0,
+        1, -1, 0,
     }
 
     rows = 20
@@ -136,10 +136,9 @@ func newCell(x, y int) *Entity {
     livingSystem.Targets[x] = append(livingSystem.Targets[x], *livingNode)
 
     var cell Entity
-    cell.Components = make(map[string]any)
-    cell.AddComponent("position", positionComponent)
-    cell.AddComponent("display", displayComponent)
-    cell.AddComponent("living", livingComponent)
+    cell.Position = positionComponent
+    cell.Display = displayComponent
+    cell.Living = livingComponent
 
     return &cell
 }

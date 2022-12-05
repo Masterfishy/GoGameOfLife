@@ -2,17 +2,20 @@ package engine
 
 type Entity struct {
 	Name string
-	Components map[string]any
+	Position *PositionComponent
+	Display *DisplayComponent
+	Living *LivingComponent
 }
 
 func (e Entity) AddComponent(name string, component any) {
-	e.Components[name] = component
+	// TODO if generic
 }
 
 func (e Entity) RemoveComponent(name string) {
-	delete(e.Components, name)
+	// TODO if generic
 }
 
 func (e Entity) GetComponent(name string) any {
-	return e.Components[name]
+	// TODO if generic
+	return nil
 }
