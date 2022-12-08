@@ -6,7 +6,7 @@ import (
     "time"
     "flag"
 
-    . "papaya/engine"
+    . "gopherlife/engine"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
 )

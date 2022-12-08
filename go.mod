@@ -1,4 +1,4 @@
-module papaya
+module gopherlife
 
 go 1.19
 

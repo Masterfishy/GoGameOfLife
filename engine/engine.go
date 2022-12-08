@@ -4,7 +4,8 @@ import ( "container/list")
 
 type Engine struct {
 	Entities []*Entity
-	Systems []any
+	RenderSystem *RenderSystem
+	LivingSystem *LivingSystem
 	Nodes map[string]*list.List
 }
 
@@ -34,20 +35,8 @@ func (e Engine) RemoveEntity(entity *Entity) {
 			_ = append(e.Entities[:i], e.Entities[i+1:]...)
 		}
 	}
-}
 
-func (e Engine) AddSystem(system *any) {
-	// TODO
-}
-
-func (e Engine) RemoveSystem(system *any) {
-	// TODO
-}
-
-func (e Engine) GetNodeList(nodeClass string) list.List {
-	// TODO
-	var list list.List
-	return list
+	// Remove nodes?
 }
 
 func (e Engine) Update(time float32) {
