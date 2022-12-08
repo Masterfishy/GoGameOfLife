@@ -1,7 +1,7 @@
 package engine
 
 import (
-	. "gopherlife/graphics"
+    "github.com/Masterfishy/GopherLife/graphics"
 
 	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.3/glfw"
@@ -32,12 +32,12 @@ func (rs RenderSystem) Start() {
         panic(err)
     }
 
-    vertexShader, err := CompileShader(VertexShaderSource, gl.VERTEX_SHADER)
+    vertexShader, err := graphics.CompileShader(graphics.VertexShaderSource, gl.VERTEX_SHADER)
     if err != nil {
         panic(err)
     }
 
-    fragmentShader, err := CompileShader(FragmentShaderSource, gl.FRAGMENT_SHADER)
+    fragmentShader, err := graphics.CompileShader(graphics.FragmentShaderSource, gl.FRAGMENT_SHADER)
     if err != nil {
         panic(err)
     }
@@ -76,7 +76,7 @@ func (rs RenderSystem) draw(node *RenderNode) {
 	node.Display.Rotation = node.Position.Rotation
 
 	// Create Vertex Array Object
-	vao := MakeVao(node.Display.Points)
+	vao := graphics.MakeVao(node.Display.Points)
 
 	gl.BindVertexArray(vao)
 	gl.DrawArrays(gl.TRIANGLES, 0, int32(len(node.Display.Points) / 3))
