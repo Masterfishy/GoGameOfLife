@@ -2,11 +2,10 @@ package main
 
 import (
 	"runtime"
-    "math/rand"
     "time"
     "flag"
 
-    . "github.com/Masterfishy/GopherLife/engine"
+    "github.com/Masterfishy/GopherLife/engine"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
 )
@@ -17,24 +16,14 @@ const (
 )
 
 var (
-    square = []float32{
-        -1, 1, 0,
-        -1, -1, 0,
-        1, -1, 0,
-    
-        -1, 1, 0,
-        1, 1, 0,
-        1, -1, 0,
-    }
-
     rows = 20
     cols = 20
     seed = time.Now().UnixNano()
     threshold = 0.2
     fps = 10
 
-    renderSystem *RenderSystem
-    livingSystem *LivingSystem
+    gameEngine *engine.Engine
+    game *GopherLifeGame
 )
 
 func init() {
@@ -54,93 +43,14 @@ func main() {
     // Initialize GLFW and OpenGL
     window := initGlfw()
     defer glfw.Terminate()
-    
-    renderSystem, _ = NewRenderSystem(window)
-    livingSystem, _ = NewLivingSystem(rows, cols)
 
-    renderSystem.Start()
+    // Create the engine
+    gameEngine, _ = engine.NewEngine()
 
-    makeCells()
-
-    for !window.ShouldClose() {
-        t := time.Now()
-
-        livingSystem.Update(0)
-        renderSystem.Update(0)
-
-        time.Sleep(time.Second/time.Duration(fps) - time.Since(t))
-    }
-}
-
-// Create cells in rows and cols
-func makeCells() [][]*Entity {
-    rand.Seed(seed)
-
-    cells := make([][]*Entity, rows, cols)
-
-    for x := 0; x < rows; x++ {
-        for y := 0; y < cols; y++ {
-            c := newCell(x, y)
-            cells[x] = append(cells[x], c)
-        }
-    }
-
-    return cells
-}
-
-func newCell(x, y int) *Entity {
-    points := make([]float32, len(square), len(square))
-    copy(points, square)
-
-    for i := 0; i < len(points); i++ {
-        var position float32
-        var size float32
-        
-        switch i % 3 {
-        case 0:
-            size = 1.0 / float32(cols)
-            position = float32(x) * size
-        case 1:
-            size = 1.0 / float32(rows)
-            position = float32(y) * size
-        default:
-            continue
-        }
-
-        if points[i] < 0 {
-            points[i] = (position * 2) - 1
-        } else {
-            points[i] = ((position + size) * 2) - 1
-        }
-    }
-
-    alive := rand.Float64() < threshold
-
-    positionComponent := &PositionComponent{ X: float32(x), Y: float32(y), Rotation: 0 }
-    displayComponent := &DisplayComponent{ Points: points, X: float32(x), Y: float32(y), Rotation: 0 }
-    livingComponent := &LivingComponent{ Alive: alive, AliveNext: alive }
-
-    renderNode := &RenderNode{ 
-        Position: positionComponent,
-        Display: displayComponent,
-        Living: livingComponent,
-    }
-
-    renderSystem.Targets = append(renderSystem.Targets, *renderNode)
-
-    livingNode := &LivingNode{
-        Living: livingComponent,
-        Position: positionComponent,
-    }
-
-    livingSystem.Targets[x] = append(livingSystem.Targets[x], *livingNode)
-
-    var cell Entity
-    cell.Position = positionComponent
-    cell.Display = displayComponent
-    cell.Living = livingComponent
-
-    return &cell
+    // Create the game and play
+    game, _ = NewGopherLifeGame(gameEngine, window, rows, cols, seed, threshold, fps)
+    game.SetUp()
+    game.Play()
 }
 
 // Initialize glfw and return a window to use.

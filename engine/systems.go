@@ -26,7 +26,7 @@ func NewRenderSystem(window *glfw.Window) (*RenderSystem, error) {
 }
 
 // Initialize OpenGL
-func (rs RenderSystem) Start() {
+func (rs *RenderSystem) Start() {
 	// Initialize OpenGL
 	if err := gl.Init(); err != nil {
         panic(err)
@@ -48,6 +48,13 @@ func (rs RenderSystem) Start() {
     gl.LinkProgram(program)
 
     rs.Program = program
+}
+
+// NodeAddedHandler adds a node to the render system when an event is triggered
+func (rs *RenderSystem) NodeAddedHandler(payload NodeAddedPayload) {
+	if (payload.Class == Render) {
+		rs.Targets = append(rs.Targets, *payload.RenderNode)
+	}
 }
 
 // Draw all Render Nodes
@@ -89,13 +96,25 @@ type LivingSystem struct {
 	Targets [][]LivingNode
 }
 
-// Creates a new LivingSystem with xSize by ySize LivingNodes
-func NewLivingSystem(xSize int, ySize int) (*LivingSystem, error) {
+// Creates a new LivingSystem
+func NewLivingSystem(rows, cols int) (*LivingSystem, error) {
 	system := &LivingSystem{
-		Targets: make([][]LivingNode, xSize, ySize),
+		Targets: make([][]LivingNode, rows, cols),
 	}
 
 	return system, nil
+}
+
+// NodeAddedHandler adds a node to the render system when an event is triggered
+func (ls *LivingSystem) NodeAddedHandler(payload NodeAddedPayload) {
+	if (payload.Class == Living) {
+		x := int(payload.LivingNode.Position.X)
+		y := int(payload.LivingNode.Position.Y)
+
+		if (x < len(ls.Targets) && y < len(ls.Targets[0])) {
+			ls.Targets[x] = append(ls.Targets[x], *payload.LivingNode)
+		}
+	}
 }
 
 // Updates the LivingSystem by the given time step
